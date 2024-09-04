@@ -1,11 +1,27 @@
-import { Button } from "./components/ui/button";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-const App = () => {
+import AuthLayout from "@/layouts/authLayout";
+import LoginPage from "@/pages/auth/loginPage";
+
+const appRouter = createBrowserRouter([
+  {
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "login",
+        element: <LoginPage />,
+      },
+    ],
+  },
+]);
+
+function App() {
   return (
-    <div>
-      <Button>Click me</Button>
-    </div>
+    <main>
+      <RouterProvider router={appRouter}></RouterProvider>
+    </main>
   );
-};
+}
 
 export default App;
