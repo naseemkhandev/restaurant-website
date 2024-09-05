@@ -33,3 +33,12 @@ export const loginSchema = z.object({
 });
 
 export type LoginInputState = z.infer<typeof loginSchema>;
+
+export const forgotPasswordSchema = z.object({
+  email: z
+    .string()
+    .email({ message: "Invalid email address" })
+    .max(255, { message: "Email address is too long" }),
+});
+
+export type ForgotPasswordInputState = z.infer<typeof forgotPasswordSchema>;
