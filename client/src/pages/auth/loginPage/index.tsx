@@ -1,33 +1,34 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { LoginInputState, loginSchema } from "@/validations/authSchema";
 import { Loader2, LockKeyhole, Mail } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-interface LoginInputState {
-  email: string;
-  password: string;
-}
-
 const LoginPage = () => {
+  const [errors, setErrors] = useState<Partial<LoginInputState>>({});
   const [input, setInput] = useState<LoginInputState>({
     email: "",
     password: "",
   });
 
   const loading = false;
-  const errors = {
-    email: "",
-    password: "",
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const result = loginSchema.safeParse(input);
+    if (!result.success) {
+      const formErrors = result.error.formErrors.fieldErrors;
+      setErrors(formErrors as Partial<LoginInputState>);
+      return;
+    }
+
     console.log(input);
   };
 
@@ -81,7 +82,7 @@ const LoginPage = () => {
         <div className="mb-4 mt-2 w-fit ml-auto">
           <Link
             to="/auth/forgot-password"
-            className="hover:text-blue-500 hover:underline"
+            className="hover:text-primary hover:underline"
           >
             Forgot Password
           </Link>
@@ -103,7 +104,7 @@ const LoginPage = () => {
 
         <p className="mt-5">
           Don't have an account?{" "}
-          <Link to="/auth/register" className="text-blue-500">
+          <Link to="/auth/register" className="text-primary underline">
             Signup
           </Link>
         </p>

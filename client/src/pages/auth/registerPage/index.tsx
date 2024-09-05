@@ -1,18 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { RegisterInputState, registerSchema } from "@/validations/authSchema";
 import { Loader2, LockKeyhole, Mail, PhoneOutgoing, User } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 
-interface RegisterInputState {
-  fullname: string;
-  email: string;
-  password: string;
-  contact: string;
-}
-
 const Register = () => {
+  const [errors, setErrors] = useState<Partial<RegisterInputState>>({});
   const [input, setInput] = useState<RegisterInputState>({
     fullname: "",
     email: "",
@@ -28,16 +23,17 @@ const Register = () => {
   const loginSubmitHandler = async (e: FormEvent) => {
     e.preventDefault();
 
+    const result = registerSchema.safeParse(input);
+    if (!result.success) {
+      const fieldErrors = result.error.formErrors.fieldErrors;
+      setErrors(fieldErrors as Partial<RegisterInputState>);
+      return;
+    }
+
     console.log(input);
   };
 
   const loading = false;
-  const errors = {
-    fullname: "",
-    email: "",
-    password: "",
-    contact: "",
-  };
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -138,7 +134,7 @@ const Register = () => {
 
         <p className="mt-5">
           Already have an account?{" "}
-          <Link to="/auth/login" className="text-blue-500">
+          <Link to="/auth/login" className="text-primary underline">
             Login
           </Link>
         </p>
