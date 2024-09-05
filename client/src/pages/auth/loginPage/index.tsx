@@ -2,18 +2,41 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Loader2, LockKeyhole, Mail } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
+interface LoginInputState {
+  email: string;
+  password: string;
+}
+
 const LoginPage = () => {
+  const [input, setInput] = useState<LoginInputState>({
+    email: "",
+    password: "",
+  });
+
   const loading = false;
   const errors = {
     email: "",
     password: "",
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(input);
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <form className="md:p-8 w-full max-w-md rounded-lg md:border border-gray-200 mx-4">
+      <form
+        onSubmit={handleSubmit}
+        className="md:p-8 w-full max-w-md rounded-lg md:border border-gray-200 mx-4"
+      >
         <div className="mb-4">
           <h1 className="font-semibold text-xl 2xl:text-2xl">Welcome back!</h1>
           <p className="text-sm 2xl:text-base text-gray-500">
@@ -27,6 +50,8 @@ const LoginPage = () => {
               type="email"
               placeholder="Email"
               name="email"
+              value={input?.email}
+              onChange={handleChange}
               className="pl-10 focus-visible:ring-1"
             />
             <Mail className="absolute size-5 inset-y-3.5 left-2 text-gray-500 pointer-events-none" />
@@ -42,6 +67,8 @@ const LoginPage = () => {
               type="password"
               placeholder="Password"
               name="password"
+              value={input?.password}
+              onChange={handleChange}
               className="pl-10 focus-visible:ring-1"
             />
             <LockKeyhole className="absolute size-5 inset-y-3.5 left-2 text-gray-500 pointer-events-none" />
