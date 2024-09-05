@@ -42,3 +42,12 @@ export const forgotPasswordSchema = z.object({
 });
 
 export type ForgotPasswordInputState = z.infer<typeof forgotPasswordSchema>;
+
+export const resetPasswordSchema = z.object({
+  newPassword: z
+    .string()
+    .min(6, { message: "Password must be atlesat 6 characters" })
+    .max(255, { message: "Password is too long" }),
+});
+
+export type ResetPasswordInputState = z.infer<typeof resetPasswordSchema>;
