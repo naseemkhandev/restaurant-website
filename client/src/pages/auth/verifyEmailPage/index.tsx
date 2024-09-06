@@ -58,7 +58,8 @@ const VerifyEmailPage = () => {
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleKeyDown(idx, e)
                 }
-                className="md:w-12 md:h-12 w-8 h-8 text-center text-sm md:text-2xl font-normal md:font-bold rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="*"
+                className="md:w-12 md:h-12 w-8 h-8 text-center text-sm md:text-2xl font-normal md:font-bold rounded-lg focus:outline-none focus:ring-2 placeholder:text-black/50"
               />
             ))}
           </div>

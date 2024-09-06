@@ -6,8 +6,22 @@ import RegisterPage from "@/pages/auth/registerPage";
 import ForgotPasswordPage from "./pages/auth/forgotPasswordPage";
 import ResetPasswordPage from "./pages/auth/resetPasswordPage";
 import VerifyEmailPage from "./pages/auth/verifyEmailPage";
+import RootLayout from "./layouts/rootLayout";
+import HomePage from "./pages/homePage";
 
 const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootLayout />,
+    children: [
+      {
+        path: "/",
+        index: true,
+        element: <HomePage />,
+      },
+    ],
+  },
+
   {
     path: "/auth",
     element: <AuthLayout />,
