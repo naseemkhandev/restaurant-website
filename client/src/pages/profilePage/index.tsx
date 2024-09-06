@@ -100,8 +100,8 @@ const ProfilePage = () => {
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-2 gap-3 my-10">
-        <div className="flex items-center gap-4 rounded-lg p-4 bg-gray-200">
-          <Mail className="text-gray-500 size-6 2xl:size-8" />
+        <div className="flex items-center gap-4 rounded-lg p-4 bg-muted dark:bg-neutral-900">
+          <Mail className="text-gray-500 dark:text-gray-200 size-6 2xl:size-8" />
           <div className="w-full">
             <Label>Email</Label>
             <input
@@ -109,62 +109,61 @@ const ProfilePage = () => {
               name="email"
               value={profileData.email}
               onChange={changeHandler}
-              className="w-full text-gray-600 bg-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none border-none"
+              className="w-full text-gray-400 dark:text-gray-500 bg-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none border-none disabled:cursor-not-allowed"
             />
           </div>
         </div>
 
-        <div className="flex items-center gap-4 rounded-lg p-4 bg-gray-200">
-          <LocateIcon className="text-gray-500 size-6 2xl:size-8" />
+        <div className="flex items-center gap-4 rounded-lg p-4 bg-muted dark:bg-neutral-900">
+          <LocateIcon className="text-gray-500 dark:text-gray-200 size-6 2xl:size-8" />
           <div className="w-full">
             <Label>Address</Label>
             <input
               name="address"
               value={profileData.address}
               onChange={changeHandler}
-              className="w-full text-gray-600 bg-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none border-none"
+              className="w-full text-gray-600 bg-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none border-none dark:text-gray-300"
             />
           </div>
         </div>
 
-        <div className="flex items-center gap-4 rounded-lg p-4 bg-gray-200">
-          <MapPin className="text-gray-500 size-6 2xl:size-8" />
+        <div className="flex items-center gap-4 rounded-lg p-4 bg-muted dark:bg-neutral-900">
+          <MapPin className="text-gray-500 dark:text-gray-200 size-6 2xl:size-8" />
           <div className="w-full">
             <Label>City</Label>
             <input
               name="city"
               value={profileData.city}
               onChange={changeHandler}
-              className="w-full text-gray-600 bg-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none border-none"
+              className="w-full text-gray-600 bg-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none border-none dark:text-gray-300"
             />
           </div>
         </div>
 
-        <div className="flex items-center gap-4 rounded-lg p-4 bg-gray-200">
-          <MapPinnedIcon className="text-gray-500 size-6 2xl:size-8" />
+        <div className="flex items-center gap-4 rounded-lg p-4 bg-muted dark:bg-neutral-900">
+          <MapPinnedIcon className="text-gray-500 dark:text-gray-200 size-6 2xl:size-8" />
           <div className="w-full">
             <Label>Country</Label>
             <input
               name="country"
               value={profileData.country}
               onChange={changeHandler}
-              className="w-full text-gray-600 bg-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none border-none"
+              className="w-full text-gray-600 bg-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none border-none dark:text-gray-300"
             />
           </div>
         </div>
       </div>
-      <div className="text-center">
-        {isLoading ? (
-          <Button disabled className="bg-orange hover:bg-hoverOrange">
-            <Loader2 className="mr-2 w-4 h-4 animate-spin" />
-            Please wait
-          </Button>
-        ) : (
-          <Button type="submit" className="bg-orange hover:bg-hoverOrange">
-            Update
-          </Button>
-        )}
-      </div>
+
+      {isLoading ? (
+        <Button disabled>
+          <Loader2 className="mr-2 w-4 h-4 animate-spin" />
+          Please wait
+        </Button>
+      ) : (
+        <Button type="submit" className="px-8">
+          Update
+        </Button>
+      )}
     </form>
   );
 };

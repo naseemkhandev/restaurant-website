@@ -9,6 +9,7 @@ import VerifyEmailPage from "./pages/auth/verifyEmailPage";
 import RootLayout from "./layouts/rootLayout";
 import HomePage from "./pages/homePage";
 import ProfilePage from "./pages/profilePage";
+import SearchPage from "./pages/searchPage";
 
 const appRouter = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const appRouter = createBrowserRouter([
       {
         path: "profile",
         element: <ProfilePage />,
+      },
+      {
+        path: "search",
+        element: <SearchPage />,
       },
     ],
   },
