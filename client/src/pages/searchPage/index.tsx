@@ -1,4 +1,3 @@
-import HeroImage from "@/assets/hero_pizza.png";
 import SearchPageSkeleton from "@/components/skeletons/searchPageSkeleton";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +14,8 @@ const searchedRestaurant = {
   data: [
     {
       _id: "1",
-      imageUrl: HeroImage,
+      imageUrl:
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/99/25/02/group-shot.jpg?w=600&h=400&s=1",
       restaurantName: "Restaurant Name",
       city: "City",
       country: "Country",
@@ -23,7 +23,8 @@ const searchedRestaurant = {
     },
     {
       _id: "2",
-      imageUrl: HeroImage,
+      imageUrl:
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/99/25/02/group-shot.jpg?w=600&h=400&s=1",
       restaurantName: "Restaurant Name",
       city: "City",
       country: "Country",
@@ -98,9 +99,10 @@ const SearchPage = () => {
                         <img
                           src={restaurant.imageUrl}
                           alt=""
-                          className="w-full h-full object-contain group-hover:scale-110 transition-all"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-all"
                         />
                       </AspectRatio>
+
                       <div className="absolute top-2 left-2 bg-white dark:bg-neutral-800 bg-opacity-75 border rounded-lg px-3 py-1">
                         <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                           Featured

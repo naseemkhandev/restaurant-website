@@ -10,6 +10,7 @@ import RootLayout from "./layouts/rootLayout";
 import HomePage from "./pages/homePage";
 import ProfilePage from "./pages/profilePage";
 import SearchPage from "./pages/searchPage";
+import RestaurantDetailsPage from "./pages/restaurantDetailsPage";
 
 const appRouter = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const appRouter = createBrowserRouter([
       {
         path: "search/:query",
         element: <SearchPage />,
+      },
+      {
+        path: "restaurant/:id",
+        element: <RestaurantDetailsPage />,
       },
     ],
   },
