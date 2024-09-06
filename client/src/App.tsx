@@ -11,6 +11,7 @@ import HomePage from "./pages/homePage";
 import ProfilePage from "./pages/profilePage";
 import SearchPage from "./pages/searchPage";
 import RestaurantDetailsPage from "./pages/restaurantDetailsPage";
+import CartPage from "./pages/cartPage";
 
 const appRouter = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const appRouter = createBrowserRouter([
       {
         path: "restaurant/:id",
         element: <RestaurantDetailsPage />,
+      },
+      {
+        path: "cart",
+        element: <CartPage />,
       },
     ],
   },
