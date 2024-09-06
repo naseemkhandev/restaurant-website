@@ -8,6 +8,7 @@ import ResetPasswordPage from "./pages/auth/resetPasswordPage";
 import VerifyEmailPage from "./pages/auth/verifyEmailPage";
 import RootLayout from "./layouts/rootLayout";
 import HomePage from "./pages/homePage";
+import ProfilePage from "./pages/profilePage";
 
 const appRouter = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const appRouter = createBrowserRouter([
         path: "/",
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "profile",
+        element: <ProfilePage />,
       },
     ],
   },
