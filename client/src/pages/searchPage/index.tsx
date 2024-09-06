@@ -33,7 +33,7 @@ const searchedRestaurant = {
 };
 
 const SearchPage = () => {
-  const params = useParams();
+  const { query } = useParams();
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const appliedFilter = ["Filter 1", "Filter 2", "Filter 3"];
@@ -86,7 +86,7 @@ const SearchPage = () => {
               {loading ? (
                 <SearchPageSkeleton />
               ) : !loading && searchedRestaurant?.data.length === 0 ? (
-                <NoResultFound searchText={params.text!} />
+                <NoResultFound searchText={query!} />
               ) : (
                 searchedRestaurant?.data.map((restaurant) => (
                   <Card

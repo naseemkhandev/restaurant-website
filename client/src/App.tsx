@@ -26,7 +26,7 @@ const appRouter = createBrowserRouter([
         element: <ProfilePage />,
       },
       {
-        path: "search",
+        path: "search/:query",
         element: <SearchPage />,
       },
     ],

@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function HeroSection() {
-  const [searchText, setSearchText] = useState<string>("");
+  const [query, setQuery] = useState<string>("");
   const navigate = useNavigate();
 
   return (
@@ -36,14 +36,14 @@ export default function HeroSection() {
                 <Input
                   type="text"
                   placeholder="Search restaurant by name, city & country"
-                  className="w-full dark:bg-white dark:border-white"
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
+                  className="w-full dark:bg-white dark:border-white dark:text-black"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
                 />
               </div>
 
               <Button
-                onClick={() => navigate(`/search/${searchText}`)}
+                onClick={() => navigate(`/search/${query}`)}
                 className="w-full"
               >
                 <span>Search</span>
