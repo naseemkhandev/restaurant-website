@@ -36,7 +36,7 @@ export default function HeroSection() {
                 <Input
                   type="text"
                   placeholder="Search restaurant by name, city & country"
-                  className="w-full"
+                  className="w-full dark:bg-white dark:border-white"
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
                 />
