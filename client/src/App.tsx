@@ -17,6 +17,7 @@ import RestaurantDetailsPage from "./pages/restaurantDetailsPage";
 import SearchPage from "./pages/searchPage";
 import OrdersPage from "./pages/ordersPage";
 import NotFoundPage from "./pages/notFountPage";
+import SuccessPage from "./pages/successPage";
 
 const appRouter = createBrowserRouter([
   {
@@ -100,6 +101,10 @@ const appRouter = createBrowserRouter([
   {
     path: "*",
     element: <NotFoundPage />,
+  },
+  {
+    path: "/success",
+    element: <SuccessPage />,
   },
 ]);
 
