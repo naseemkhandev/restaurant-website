@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const SuccessPage = () => {
   return (
     <div className="dark:bg-neutral-900 h-dvh flex items-center justify-center container px-5 mx-auto">
-      <div className="p-6 flex flex-col gap-5 md:mx-auto bg-gray-100 rounded-xl px-5 md:px-20 pb-16 pt-10">
+      <div className="p-6 flex flex-col gap-5 md:mx-auto bg-gray-50 rounded-xl px-5 md:px-20 pb-16 pt-10">
         <svg
           viewBox="0 0 24 24"
           className="text-green-600 w-16 h-16 md:w-24 md:h-24 mx-auto my-6"
