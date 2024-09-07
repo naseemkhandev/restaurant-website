@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import mongoose, { Document } from "mongoose";
 
 export interface IUser {
   fullname: string;
@@ -19,7 +19,7 @@ export interface IUser {
 }
 
 export interface IUserDocument extends IUser, Document {
-  _id: string;
+  _id: mongoose.Schema.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -1,4 +1,4 @@
-import mongoose, { Document, mongo } from "mongoose";
+import mongoose, { Document } from "mongoose";
 
 export interface IRestaurant {
   user: mongoose.Schema.Types.ObjectId;
@@ -12,7 +12,7 @@ export interface IRestaurant {
 }
 
 export interface IRestaurantDocument extends IRestaurant, Document {
-  _id: string;
+  _id: mongoose.Schema.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
