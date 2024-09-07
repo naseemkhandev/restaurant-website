@@ -9,11 +9,10 @@ const NotFoundPage = () => {
           <div className="m-auto text-center">
             <div>
               <svg
-                width={631}
-                height={379}
                 viewBox="0 0 631 379"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="w-80 sm:w-96 md:w-[631px] md:h-96 mx-auto"
               >
                 <g clipPath="url(#clip0)">
                   <path

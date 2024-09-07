@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 
 const SuccessPage = () => {
   return (
-    <div className="bg-gray-100 dark:bg-neutral-900 h-dvh flex items-center justify-center">
-      <div className="p-6 flex flex-col gap-5 md:mx-auto">
+    <div className="dark:bg-neutral-900 h-dvh flex items-center justify-center container px-5 mx-auto">
+      <div className="p-6 flex flex-col gap-5 md:mx-auto bg-gray-100 rounded-xl px-5 md:px-20 pb-16 pt-10">
         <svg
           viewBox="0 0 24 24"
-          className="text-green-600 w-24 h-24 mx-auto my-6"
+          className="text-green-600 w-16 h-16 md:w-24 md:h-24 mx-auto my-6"
         >
           <path
             fill="currentColor"
@@ -16,7 +16,7 @@ const SuccessPage = () => {
         </svg>
 
         <div className="text-center flex flex-col gap-5">
-          <h3 className="md:text-4xl text-base text-gray-900 dark:text-white font-semibold text-center">
+          <h3 className="md:text-4xl text-3xl text-gray-900 dark:text-white font-semibold text-center">
             Payment Done!
           </h3>
 
