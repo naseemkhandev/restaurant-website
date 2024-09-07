@@ -46,7 +46,7 @@ const CartPage = () => {
             <TableHead className="text-center">Price</TableHead>
             <TableHead className="text-center">Quantity</TableHead>
             <TableHead className="text-center">Total</TableHead>
-            <TableHead className="text-right">Remove</TableHead>
+            <TableHead className="text-right">Action</TableHead>
           </TableRow>
         </TableHeader>
 
