@@ -30,7 +30,7 @@ const RestaurantPage = () => {
     city: "",
     country: "",
     deliveryTime: 0,
-    cuisines: [""], // Initialize with a default value
+    cuisines: [""],
     imageFile: undefined,
   });
 

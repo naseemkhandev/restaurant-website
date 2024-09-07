@@ -4,6 +4,7 @@ import AuthLayout from "@/layouts/authLayout";
 import LoginPage from "@/pages/auth/loginPage";
 import RegisterPage from "@/pages/auth/registerPage";
 import RootLayout from "./layouts/rootLayout";
+import MenuPage from "./pages/admin/menuPage";
 import RestaurantPage from "./pages/admin/restaurantPage";
 import ForgotPasswordPage from "./pages/auth/forgotPasswordPage";
 import ResetPasswordPage from "./pages/auth/resetPasswordPage";
@@ -50,6 +51,10 @@ const appRouter = createBrowserRouter([
       {
         path: "restaurant",
         element: <RestaurantPage />,
+      },
+      {
+        path: "menu",
+        element: <MenuPage />,
       },
     ],
   },
