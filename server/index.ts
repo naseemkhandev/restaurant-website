@@ -1,12 +1,17 @@
-import express from "express";
+import app from "./src/app";
 import { config } from "./src/config/config";
+import connectToDB from "./src/config/db";
 
-const app = express();
+const startServer = async () => {
+  try {
+    connectToDB();
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+    app.listen(config.port, () =>
+      console.log(`Server is running on port ${config.port}`)
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-app.listen(config.port, () => {
-  console.log(`Server is running on ${config.port}`);
-});
+startServer();
