@@ -3,15 +3,16 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthLayout from "@/layouts/authLayout";
 import LoginPage from "@/pages/auth/loginPage";
 import RegisterPage from "@/pages/auth/registerPage";
+import RootLayout from "./layouts/rootLayout";
+import RestaurantPage from "./pages/admin/restaurantPage";
 import ForgotPasswordPage from "./pages/auth/forgotPasswordPage";
 import ResetPasswordPage from "./pages/auth/resetPasswordPage";
 import VerifyEmailPage from "./pages/auth/verifyEmailPage";
-import RootLayout from "./layouts/rootLayout";
+import CartPage from "./pages/cartPage";
 import HomePage from "./pages/homePage";
 import ProfilePage from "./pages/profilePage";
-import SearchPage from "./pages/searchPage";
 import RestaurantDetailsPage from "./pages/restaurantDetailsPage";
-import CartPage from "./pages/cartPage";
+import SearchPage from "./pages/searchPage";
 
 const appRouter = createBrowserRouter([
   {
@@ -38,6 +39,17 @@ const appRouter = createBrowserRouter([
       {
         path: "cart",
         element: <CartPage />,
+      },
+    ],
+  },
+
+  {
+    path: "/admin",
+    element: <RootLayout />,
+    children: [
+      {
+        path: "restaurant",
+        element: <RestaurantPage />,
       },
     ],
   },

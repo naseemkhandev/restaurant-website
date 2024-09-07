@@ -1,4 +1,4 @@
-import HereSection from "@/components/home/heroSection";
+import HereSection from "@/pages/homePage/heroSection";
 
 const HomePage = () => {
   return (
