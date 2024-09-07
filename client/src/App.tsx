@@ -16,6 +16,7 @@ import ProfilePage from "./pages/profilePage";
 import RestaurantDetailsPage from "./pages/restaurantDetailsPage";
 import SearchPage from "./pages/searchPage";
 import OrdersPage from "./pages/ordersPage";
+import NotFoundPage from "./pages/notFountPage";
 
 const appRouter = createBrowserRouter([
   {
@@ -94,6 +95,11 @@ const appRouter = createBrowserRouter([
         element: <VerifyEmailPage />,
       },
     ],
+  },
+
+  {
+    path: "*",
+    element: <NotFoundPage />,
   },
 ]);
 
