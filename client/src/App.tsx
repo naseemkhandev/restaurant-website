@@ -5,6 +5,7 @@ import LoginPage from "@/pages/auth/loginPage";
 import RegisterPage from "@/pages/auth/registerPage";
 import RootLayout from "./layouts/rootLayout";
 import MenuPage from "./pages/admin/menuPage";
+import AdminOrdersPage from "./pages/admin/ordersPage";
 import RestaurantPage from "./pages/admin/restaurantPage";
 import ForgotPasswordPage from "./pages/auth/forgotPasswordPage";
 import ResetPasswordPage from "./pages/auth/resetPasswordPage";
@@ -14,7 +15,7 @@ import HomePage from "./pages/homePage";
 import ProfilePage from "./pages/profilePage";
 import RestaurantDetailsPage from "./pages/restaurantDetailsPage";
 import SearchPage from "./pages/searchPage";
-import OrdersPage from "./pages/admin/ordersPage";
+import OrdersPage from "./pages/ordersPage";
 
 const appRouter = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const appRouter = createBrowserRouter([
         path: "cart",
         element: <CartPage />,
       },
+      {
+        path: "orders",
+        element: <OrdersPage />,
+      },
     ],
   },
 
@@ -59,7 +64,7 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "orders",
-        element: <OrdersPage />,
+        element: <AdminOrdersPage />,
       },
     ],
   },

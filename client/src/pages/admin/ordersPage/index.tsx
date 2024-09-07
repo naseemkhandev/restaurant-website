@@ -38,7 +38,7 @@ const restaurantOrder = [
   },
 ];
 
-const OrdersPage = () => {
+const AdminOrdersPage = () => {
   const handleStatusChange = async (id: string, status: string) => {
     console.log(id, status);
   };
@@ -51,7 +51,7 @@ const OrdersPage = () => {
 
       <div className="space-y-8">
         {restaurantOrder.map((order) => (
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 sm:p-8 border border-gray-200 dark:border-gray-700">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-neutral-800 shadow-lg rounded-xl p-6 sm:p-8 border border-gray-200 dark:border-gray-700">
             <div className="flex-1 mb-6 sm:mb-0">
               <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
                 {order.deliveryDetails.name}
@@ -66,7 +66,7 @@ const OrdersPage = () => {
               </p>
             </div>
             <div className="w-full sm:w-1/3">
-              <Label className="block text-sm font-medium text-gray-700 dark:text-gray300 mb-2">
+              <Label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Order Status
               </Label>
               <Select
@@ -102,4 +102,4 @@ const OrdersPage = () => {
   );
 };
 
-export default OrdersPage;
+export default AdminOrdersPage;
