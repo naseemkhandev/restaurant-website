@@ -6,6 +6,7 @@ import throwError from "../utils/throwError";
 import generateVerificationToken from "../utils/generateVerificationToken";
 import generateJwtToken from "../utils/generateJwtToken";
 import sendVerificationEmail from "../utils/sendVerificationEmail";
+import sendWelcomeEmail from "../utils/sendWelcomeEmail";
 
 export const register = async (
   req: Request,
@@ -85,6 +86,35 @@ export const logout = async (
       .clearCookie("token")
       .status(200)
       .json({ message: "Logged out successful" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const verifyEmail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { token } = req.body;
+
+    const user = await User.findOne({
+      verificationToken: token,
+      verificationTokenExpiresAt: { $gt: new Date() },
+    }).select("-password");
+
+    if (!user) return next(throwError(400, "Invalid or expired token"));
+    user.isVerified = true;
+    user.verificationToken = undefined;
+    user.verificationTokenExpiresAt = undefined;
+    await user.save();
+
+    await sendWelcomeEmail(user.email, user.fullname);
+
+    return res.status(200).json({
+      message: "Email verified successfully",
+    });
   } catch (error) {
     next(error);
   }
