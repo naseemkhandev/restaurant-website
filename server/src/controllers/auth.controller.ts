@@ -7,11 +7,11 @@ import {
   sendVerificationEmail,
   sendWelcomeEmail,
   sendResetPasswordEmail,
+  sendResetPasswordSuccessEmail,
 } from "../mailtrap/email";
 import User from "../models/user.model";
 import generateJwtToken from "../utils/generateJwtToken";
 import generateVerificationCode from "../utils/generateVerificationCode";
-import sendResetPasswordSuccessEmail from "../utils/sendResetPasswordSuccessEmail";
 import throwError from "../utils/throwError";
 
 export const register = async (
@@ -184,7 +184,7 @@ export const resetPassword = async (
     user.resetPasswordToken = undefined;
     user.resetPasswordTokenExpiresAt = undefined;
     await user.save();
-    await sendResetPasswordSuccessEmail(user.email);
+    await sendResetPasswordSuccessEmail(user.email, user.fullname, next);
 
     return res.status(200).json({
       message: "Password reset successful",
