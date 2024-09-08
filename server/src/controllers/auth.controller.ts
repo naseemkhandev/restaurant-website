@@ -59,6 +59,7 @@ export const login = async (
     if (!isPasswordValid)
       return next(throwError(400, "Wrong email or password"));
 
+    generateJwtToken({ _id: user._id, isAdmin: user.isAdmin }, res);
     user.lastLogin = new Date();
     await user.save();
 
@@ -69,6 +70,21 @@ export const login = async (
       message: `Welcome back, ${userInfo.fullname}`,
       userInfo,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const logout = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    return res
+      .clearCookie("token")
+      .status(200)
+      .json({ message: "Logged out successful" });
   } catch (error) {
     next(error);
   }
