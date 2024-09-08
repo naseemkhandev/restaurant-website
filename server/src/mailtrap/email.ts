@@ -28,4 +28,22 @@ export const sendWelcomeEmail = async (
   email: string,
   fullname: string,
   next: NextFunction
-) => {};
+) => {
+  try {
+    const res = await client.send({
+      from: sender as any,
+      to: email as any,
+      subject: "Welcome to Foodie",
+      html: `<h1>Welcome to Foodie</h1>
+      <p>Hi ${fullname},</p>
+      <p>Welcome to Foodie, your favorite food ordering app.</p>`,
+      category: "Welcome Email",
+      template_variables: {
+        company_name: "Foodie",
+        user_name: fullname,
+      },
+    });
+  } catch (error) {
+    next(throwError(500, "Failed to send welcome email"));
+  }
+};
