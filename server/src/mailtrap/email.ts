@@ -1,0 +1,31 @@
+import { NextFunction } from "express";
+
+import throwError from "../utils/throwError";
+import { client, sender } from "./index";
+import { config } from "../config/config";
+
+export const sendVerificationEmail = async (
+  email: string,
+  verificationToken: string,
+  next: NextFunction
+) => {
+  try {
+    const res = await client.send({
+      from: sender as any,
+      to: email as any,
+      subject: "Account Verification",
+      html: `<h1>Account Verification</h1>
+      <p>Click the link below to verify your account</p>
+      <a href="${config.clientUrl}/verify-email/${verificationToken}">Verify Account</a>`,
+      category: "Email Verification",
+    });
+  } catch (error) {
+    next(throwError(500, "Failed to send verification email"));
+  }
+};
+
+export const sendWelcomeEmail = async (
+  email: string,
+  fullname: string,
+  next: NextFunction
+) => {};

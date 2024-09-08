@@ -1,16 +1,15 @@
-import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
+import { NextFunction, Request, Response } from "express";
 
-import User from "../models/user.model";
-import throwError from "../utils/throwError";
-import generateVerificationCode from "../utils/generateVerificationCode";
-import generateJwtToken from "../utils/generateJwtToken";
-import sendVerificationEmail from "../utils/sendVerificationEmail";
-import sendWelcomeEmail from "../utils/sendWelcomeEmail";
-import sendResetPasswordEmail from "../utils/sendResetPasswordEmail";
 import { config } from "../config/config";
+import { sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/email";
+import User from "../models/user.model";
+import generateJwtToken from "../utils/generateJwtToken";
+import generateVerificationCode from "../utils/generateVerificationCode";
+import sendResetPasswordEmail from "../utils/sendResetPasswordEmail";
 import sendResetPasswordSuccessEmail from "../utils/sendResetPasswordSuccessEmail";
+import throwError from "../utils/throwError";
 
 export const register = async (
   req: Request,
@@ -38,7 +37,7 @@ export const register = async (
     const userObject = newUser.toObject();
     const { password: userPassword, ...userInfo } = userObject;
     generateJwtToken({ _id: newUser._id, isAdmin: newUser.isAdmin }, res);
-    await sendVerificationEmail(email, verificationToken as any);
+    await sendVerificationEmail(email, verificationToken as any, next);
 
     return res.status(201).json({
       message: "You have registered successfully",
@@ -114,7 +113,7 @@ export const verifyEmail = async (
     user.verificationTokenExpiresAt = undefined;
     await user.save();
 
-    await sendWelcomeEmail(user.email, user.fullname);
+    await sendWelcomeEmail(user.email, user.fullname, next);
 
     return res.status(200).json({
       message: "Email verified successfully",

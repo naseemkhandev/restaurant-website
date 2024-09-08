@@ -10,6 +10,9 @@ const _config = {
   cloudinaryCloudName: process.env.CLOUDINARY_NAME,
   cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
   cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
+  mailtrapApiToken: process.env.MAILTRAP_API_TOKEN,
+  mailtrapEmail: process.env.MAILTRAP_EMAIL,
+  mailtrapName: process.env.MAILTRAP_NAME,
 };
 
 export const config = Object.freeze(_config);
