@@ -1,6 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import bodyParser from "body-parser";
 
 import { config } from "./config/config";
 import errorHandler from "./middlewares/errorHandler.midddleware";
@@ -11,7 +12,8 @@ const app = express();
 
 // Middlewares
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(cookieParser());
 app.use(
   cors({
