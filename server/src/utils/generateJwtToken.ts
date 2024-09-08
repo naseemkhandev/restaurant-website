@@ -4,6 +4,14 @@ import jwt from "jsonwebtoken";
 import { config } from "../config/config";
 import mongoose from "mongoose";
 
+declare global {
+  namespace Express {
+    interface Request {
+      user?: jwt.JwtPayload;
+    }
+  }
+}
+
 const generateToken = (
   user: { _id: mongoose.Schema.Types.ObjectId; isAdmin: boolean },
   res: Response
@@ -12,13 +20,13 @@ const generateToken = (
 
   const token = jwt.sign(
     { userId: _id, isAdmin: isAdmin },
-    config.jwtSecret as string,
+    config.jwtSecret! as string,
     {
       expiresIn: "15d",
     }
   );
 
-  res.cookie("token", token, {
+  res.cookie("token", token,  {
     httpOnly: true,
     maxAge: 15 * 24 * 60 * 60 * 1000,
     secure: config.env !== "development",

@@ -10,7 +10,8 @@ export const getAuthUser = async (
   next: NextFunction
 ) => {
   try {
-    const userId = req.user?.userId;
+    const userId = req?.user?.userId;
+
     const user = await User.findById(userId).select("-password");
     if (!user) return next(throwError(400, "User not found"));
 
@@ -24,13 +25,13 @@ export const getAuthUser = async (
   }
 };
 
-export const updateProfile = async (
+export const updateUserProfile = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const userId = req.id;
+    const userId = req?.user?.userId;
     const { fullname, email, address, city, country, profilePicture } =
       req.body;
     let cloudResponse: any;

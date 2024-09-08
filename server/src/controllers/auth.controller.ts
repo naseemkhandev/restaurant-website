@@ -4,7 +4,7 @@ import crypto from "crypto";
 
 import User from "../models/user.model";
 import throwError from "../utils/throwError";
-import generateVerificationToken from "../utils/generateVerificationToken";
+import generateVerificationCode from "../utils/generateVerificationCode";
 import generateJwtToken from "../utils/generateJwtToken";
 import sendVerificationEmail from "../utils/sendVerificationEmail";
 import sendWelcomeEmail from "../utils/sendWelcomeEmail";
@@ -24,7 +24,7 @@ export const register = async (
     if (user) return next(throwError(400, "User already exists"));
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const verificationToken = generateVerificationToken();
+    const verificationToken = generateVerificationCode();
 
     const newUser = await User.create({
       fullname,
