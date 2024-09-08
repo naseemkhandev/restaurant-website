@@ -3,11 +3,14 @@ import crypto from "crypto";
 import { NextFunction, Request, Response } from "express";
 
 import { config } from "../config/config";
-import { sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/email";
+import {
+  sendVerificationEmail,
+  sendWelcomeEmail,
+  sendResetPasswordEmail,
+} from "../mailtrap/email";
 import User from "../models/user.model";
 import generateJwtToken from "../utils/generateJwtToken";
 import generateVerificationCode from "../utils/generateVerificationCode";
-import sendResetPasswordEmail from "../utils/sendResetPasswordEmail";
 import sendResetPasswordSuccessEmail from "../utils/sendResetPasswordSuccessEmail";
 import throwError from "../utils/throwError";
 
@@ -148,7 +151,7 @@ export const forgotPassword = async (
     await user.save();
     // Send reset password email
     const resetUrl = `${config.clientUrl}/resetPassword/${resetToken}`;
-    await sendResetPasswordEmail(user.email, resetUrl);
+    await sendResetPasswordEmail(user.email, resetUrl, next);
 
     return res.status(200).json({
       message: "Password reset link has been sent to your email",

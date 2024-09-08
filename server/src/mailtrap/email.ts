@@ -47,3 +47,23 @@ export const sendWelcomeEmail = async (
     next(throwError(500, "Failed to send welcome email"));
   }
 };
+
+export const sendResetPasswordEmail = async (
+  email: string,
+  resetUrl: string,
+  next: NextFunction
+) => {
+  try {
+    const res = await client.send({
+      from: sender as any,
+      to: email as any,
+      subject: "Reset Your Password",
+      html: `<h1>Reset Your Password</h1>
+      <p>Click the link below to reset your password</p>
+      <a href="${resetUrl}">Reset Your Password</a>`,
+      category: "Reset Your Password",
+    });
+  } catch (error) {
+    next(throwError(500, "Failed to send reset your password email"));
+  }
+};
