@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
+import crypto from "crypto";
 
 import User from "../models/user.model";
 import throwError from "../utils/throwError";
@@ -7,6 +8,8 @@ import generateVerificationToken from "../utils/generateVerificationToken";
 import generateJwtToken from "../utils/generateJwtToken";
 import sendVerificationEmail from "../utils/sendVerificationEmail";
 import sendWelcomeEmail from "../utils/sendWelcomeEmail";
+import sendResetPasswordEmail from "../utils/sendResetPasswordEmail";
+import { config } from "../config/config";
 
 export const register = async (
   req: Request,
@@ -114,6 +117,41 @@ export const verifyEmail = async (
 
     return res.status(200).json({
       message: "Email verified successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const forgotPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email }).select("-password");
+    if (!user) return next(throwError(400, "User not found"));
+
+    // Generate reset token
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const resetTokenHash = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    // Set reset token and expiration date on the user document
+    user.resetPasswordToken = resetTokenHash;
+    user.resetPasswordTokenExpiresAt = new Date(Date.now() + 10 * 60 * 1000); // Token expires in 10 minutes
+
+    await user.save();
+    // Send reset password email
+    const resetUrl = `${config.clientUrl}/resetPassword/${resetToken}`;
+    await sendResetPasswordEmail(user.email, resetUrl);
+
+    return res.status(200).json({
+      message: "Password reset link has been sent to your email",
     });
   } catch (error) {
     next(error);
