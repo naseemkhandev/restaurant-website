@@ -59,3 +59,38 @@ export const getRestaurant = async (
     next(error);
   }
 };
+
+export const updateRestaurant = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req?.user?.userId;
+    const { restaurantName, city, country, deliveryTime, cuisines } = req.body;
+    const file = req?.file;
+
+    const restaurant = await Restaurant.findOne({ user: userId });
+    if (!restaurant) return next(throwError(404, "Restaurant not found"));
+
+    let banner = restaurant.banner;
+    if (file) {
+      banner = await uploadImageOnCloudinary(file as Express.Multer.File);
+    }
+
+    restaurant.restaurantName = restaurantName;
+    restaurant.city = city;
+    restaurant.country = country;
+    restaurant.deliveryTime = deliveryTime;
+    restaurant.cuisines = JSON.parse(cuisines);
+    restaurant.banner = banner;
+
+    await restaurant.save();
+
+    return res
+      .status(200)
+      .json({ message: "Restaurant updated successfully", restaurant });
+  } catch (error) {
+    next(error);
+  }
+};
