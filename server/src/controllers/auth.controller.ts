@@ -10,6 +10,7 @@ import sendVerificationEmail from "../utils/sendVerificationEmail";
 import sendWelcomeEmail from "../utils/sendWelcomeEmail";
 import sendResetPasswordEmail from "../utils/sendResetPasswordEmail";
 import { config } from "../config/config";
+import sendResetPasswordSuccessEmail from "../utils/sendResetPasswordSuccessEmail";
 
 export const register = async (
   req: Request,
@@ -175,13 +176,13 @@ export const resetPassword = async (
       resetPasswordToken: resetTokenHash,
       resetPasswordTokenExpiresAt: { $gt: new Date() },
     });
-
     if (!user) return next(throwError(400, "Invalid or expired token"));
 
     user.password = await bcrypt.hash(password, 10);
     user.resetPasswordToken = undefined;
     user.resetPasswordTokenExpiresAt = undefined;
     await user.save();
+    await sendResetPasswordSuccessEmail(user.email);
 
     return res.status(200).json({
       message: "Password reset successful",
