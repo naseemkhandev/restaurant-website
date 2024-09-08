@@ -1,8 +1,13 @@
 import { NextFunction } from "express";
 
 import throwError from "../utils/throwError";
+import {
+  generatePasswordResetEmailHtml,
+  generateResetSuccessEmailHtml,
+  generateWelcomeEmailHtml,
+  htmlContent,
+} from "./htmlContent";
 import { client, sender } from "./index";
-import { config } from "../config/config";
 
 export const sendVerificationEmail = async (
   email: string,
@@ -14,9 +19,7 @@ export const sendVerificationEmail = async (
       from: sender as any,
       to: email as any,
       subject: "Account Verification",
-      html: `<h1>Account Verification</h1>
-      <p>Click the link below to verify your account</p>
-      <a href="${config.clientUrl}/verify-email/${verificationToken}">Verify Account</a>`,
+      html: htmlContent.replace("{verificationToken}", verificationToken),
       category: "Email Verification",
     });
   } catch (error) {
@@ -26,7 +29,7 @@ export const sendVerificationEmail = async (
 
 export const sendWelcomeEmail = async (
   email: string,
-  fullname: string,
+  name: string,
   next: NextFunction
 ) => {
   try {
@@ -34,13 +37,11 @@ export const sendWelcomeEmail = async (
       from: sender as any,
       to: email as any,
       subject: "Welcome to Foodie",
-      html: `<h1>Welcome to Foodie</h1>
-      <p>Hi ${fullname},</p>
-      <p>Welcome to Foodie, your favorite food ordering app.</p>`,
+      html: generateWelcomeEmailHtml(name),
       category: "Welcome Email",
       template_variables: {
         company_name: "Foodie",
-        user_name: fullname,
+        name,
       },
     });
   } catch (error) {
@@ -58,9 +59,7 @@ export const sendResetPasswordEmail = async (
       from: sender as any,
       to: email as any,
       subject: "Reset Your Password",
-      html: `<h1>Reset Your Password</h1>
-      <p>Click the link below to reset your password</p>
-      <a href="${resetUrl}">Reset Your Password</a>`,
+      html: generatePasswordResetEmailHtml(resetUrl),
       category: "Reset Your Password",
     });
   } catch (error) {
@@ -70,7 +69,7 @@ export const sendResetPasswordEmail = async (
 
 export const sendResetPasswordSuccessEmail = async (
   email: string,
-  fullname: string,
+  name: string,
   next: NextFunction
 ) => {
   try {
@@ -78,9 +77,7 @@ export const sendResetPasswordSuccessEmail = async (
       from: sender as any,
       to: email as any,
       subject: "Password Reset Successful",
-      html: `<h1>Password Reset Successful</h1>
-      <p>Hi ${fullname},</p>
-      <p>Your password has been successfully reset.</p>`,
+      html: generateResetSuccessEmailHtml(),
       category: "Password Reset Successful",
     });
   } catch (error) {
