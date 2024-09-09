@@ -7,6 +7,8 @@ import { config } from "./config/config";
 import errorHandler from "./middlewares/errorHandler.midddleware";
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
+import restaurantRoutes from "./routes/restaurant.routes";
+import orderRoutes from "./routes/order.routes";
 
 const app = express();
 
@@ -28,6 +30,8 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/restaurnats", restaurantRoutes);
+app.use("/api/v1/orders", orderRoutes);
 
 app.use(errorHandler);
 

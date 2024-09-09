@@ -1,10 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { Multer } from "multer";
 
 import Restaurant from "../models/restaurant.model";
-import Order from "../models/order.model";
-import throwError from "../utils/throwError";
 import uploadImageOnCloudinary from "../utils/imageUpload";
+import throwError from "../utils/throwError";
 
 export const createRestaurant = async (
   req: Request,
@@ -96,52 +94,6 @@ export const updateRestaurant = async (
   }
 };
 
-export const getRestaurantOrders = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const userId = req?.user?.userId;
-
-    const restaurant = await Restaurant.findOne({ user: userId });
-    if (!restaurant) return next(throwError(404, "Restaurant not found"));
-
-    const orders = await Order.find({ restaurant: restaurant._id })
-      .populate("user", "-password")
-      .populate("restaurant");
-
-    return res.status(200).json({
-      message: "Orders found successfully",
-      orders,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const updateOrderStatus = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { orderId, status } = req.body;
-
-    const order = await Order.findOne({ _id: orderId });
-    if (!order) return next(throwError(404, "Order not found"));
-
-    order?.status = status;
-    await order.save();
-
-    return res
-      .status(200)
-      .json({ message: "Order status updated successfully", order });
-  } catch (error) {
-    next(error);
-  }
-};
-
 export const searchRestaurant = async (
   req: Request,
   res: Response,
@@ -191,8 +143,13 @@ export const getRestaurantById = async (
   next: NextFunction
 ) => {
   try {
-    const restaurantId = req.params.restaurantId;
-    const restaurant = await Restaurant.findOne({ _id: restaurantId });
+    const restaurantId = req.params.id;
+    const restaurant = await Restaurant.findOne({ _id: restaurantId })
+      .populate("user", "-password")
+      .populate({
+        path: "menus",
+        options: { sort: { createdAt: -1 } },
+      });
     if (!restaurant) return next(throwError(404, "Restaurant not found"));
 
     return res.status(200).json({
