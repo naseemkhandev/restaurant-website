@@ -32,9 +32,41 @@ export const addMenu = async (
       await restaurant.save();
     }
 
-    res.status(201).json({
+    return res.status(201).json({
       message: "Menu added successfully",
       restaurant,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateMenu = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { name, description, price } = req.body;
+    const file = req?.file;
+
+    const menu = await Menu.findById(req.params.id);
+    if (!menu) return next(throwError(404, "Menu not found"));
+
+    if (name) menu.name = name;
+    if (description) menu.description = description;
+    if (price) menu.price = price;
+    if (file) {
+      const imageUrl = await uploadImageOnCloudinary(
+        file as Express.Multer.File
+      );
+      menu.image = imageUrl;
+    }
+    await menu.save();
+
+    return res.status(200).json({
+      message: "Menu updated successfully",
+      menu,
     });
   } catch (error) {
     next(error);
