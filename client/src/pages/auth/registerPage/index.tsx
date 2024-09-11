@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { useUserStore } from "@/store/useUserStore";
 import { RegisterInputState, registerSchema } from "@/validations/authSchema";
 import { Loader2, LockKeyhole, Mail, PhoneOutgoing, User } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
@@ -14,13 +15,14 @@ const Register = () => {
     password: "",
     contact: "",
   });
+  const { register, loading } = useUserStore();
 
   const changeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
   };
 
-  const loginSubmitHandler = async (e: FormEvent) => {
+  const registerSubmitHandler = async (e: FormEvent) => {
     e.preventDefault();
 
     const result = registerSchema.safeParse(input);
@@ -30,16 +32,15 @@ const Register = () => {
       return;
     }
 
-    console.log(input);
+    setErrors({});
+    await register(input);
   };
-
-  const loading = false;
 
   return (
     <div className="flex items-center justify-center min-h-screen">
       <form
-        onSubmit={loginSubmitHandler}
-        className="md:p-8 w-full max-w-md rounded-lg md:border border-gray-200 mx-4"
+        onSubmit={registerSubmitHandler}
+        className="md:p-8 w-full max-w-md rounded-lg md:border border-gray-200 dark:border-gray-900 mx-4"
       >
         <div className="mb-4">
           <h1 className="font-semibold text-xl 2xl:text-2xl">

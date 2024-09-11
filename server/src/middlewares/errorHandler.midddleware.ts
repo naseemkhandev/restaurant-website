@@ -8,12 +8,12 @@ const errorHandler = (
   next: NextFunction
 ) => {
   const status = err.status || 500;
-  const error = err.message || "Internal server error";
+  const message = err.message || "Internal server error";
 
   res.status(status).json({
     success: false,
     status,
-    error,
+    message,
     stack: config.env === "development" ? err.stack : null,
   });
   next();

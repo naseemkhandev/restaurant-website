@@ -5,6 +5,7 @@ import throwError from "../utils/throwError";
 import uploadImageOnCloudinary from "../utils/imageUpload";
 import Menu from "../models/menu.model";
 import Restaurant from "../models/restaurant.model";
+import mongoose from "mongoose";
 
 export const addMenu = async (
   req: Request,
@@ -24,11 +25,11 @@ export const addMenu = async (
       price,
       image,
     });
-
-    const restaurant = await Restaurant.findOne({ user: req?.user.userId });
+    if (!req.user) return next(throwError(401, "Unauthorized"));
+    const restaurant = await Restaurant.findOne({ user: req.user.userId });
 
     if (restaurant) {
-      restaurant.menus.push(menu._id);
+      (restaurant.menus as mongoose.Schema.Types.ObjectId[]).push(menu._id);
       await restaurant.save();
     }
 

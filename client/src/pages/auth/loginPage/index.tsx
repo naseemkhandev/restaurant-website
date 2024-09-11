@@ -36,7 +36,7 @@ const LoginPage = () => {
     <div className="flex items-center justify-center min-h-screen">
       <form
         onSubmit={handleSubmit}
-        className="md:p-8 w-full max-w-md rounded-lg md:border border-gray-200 mx-4"
+        className="md:p-8 w-full max-w-md rounded-lg md:border border-gray-200 dark:border-gray-900 mx-4"
       >
         <div className="mb-4">
           <h1 className="font-semibold text-xl 2xl:text-2xl">Welcome back!</h1>
