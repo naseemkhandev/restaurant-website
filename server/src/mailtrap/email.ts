@@ -1,5 +1,4 @@
-import { NextFunction } from "express";
-
+import { NextFunction, Response } from "express";
 import throwError from "../utils/throwError";
 import {
   generatePasswordResetEmailHtml,
@@ -12,15 +11,21 @@ import { client, sender } from "./index";
 export const sendVerificationEmail = async (
   email: string,
   verificationToken: string,
+  res: Response,
   next: NextFunction
 ) => {
+  const recipient = [{ email }];
   try {
-    const res = await client.send({
-      from: sender as any,
-      to: email as any,
-      subject: "Account Verification",
+    await client.send({
+      from: sender,
+      to: recipient,
+      subject: "Verify your email",
       html: htmlContent.replace("{verificationToken}", verificationToken),
       category: "Email Verification",
+    });
+
+    return res.status(200).json({
+      message: "Verification email sent successfully",
     });
   } catch (error) {
     next(throwError(500, "Failed to send verification email"));
@@ -33,16 +38,12 @@ export const sendWelcomeEmail = async (
   next: NextFunction
 ) => {
   try {
-    const res = await client.send({
+    await client.send({
       from: sender as any,
       to: email as any,
-      subject: "Welcome to Foodie",
+      subject: "Welcome to Our Service",
       html: generateWelcomeEmailHtml(name),
       category: "Welcome Email",
-      template_variables: {
-        company_name: "Foodie",
-        name,
-      },
     });
   } catch (error) {
     next(throwError(500, "Failed to send welcome email"));

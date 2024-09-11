@@ -4,15 +4,27 @@ import { toast } from "sonner";
 import apiClient from "@/utils/api";
 import { LoginInputState, RegisterInputState } from "@/validations/authSchema";
 
-interface UserState {
-  user: any | null;
+type User = {
+  fullname: string;
+  email: string;
+  contact: number;
+  address: string;
+  city: string;
+  country: string;
+  profilePicture: string;
+  admin: boolean;
+  isVerified: boolean;
+};
+
+type UserState = {
+  user: User | null;
   isAuthenticated: boolean;
   isCheckingAuth: boolean;
   loading: boolean;
-  register: (data: RegisterInputState) => Promise<void>;
-  login: (data: LoginInputState) => Promise<void>;
+  register: (input: RegisterInputState) => Promise<void>;
+  login: (input: LoginInputState) => Promise<void>;
   logout: () => Promise<void>;
-}
+};
 
 export const useUserStore = create<UserState>()(
   persist(

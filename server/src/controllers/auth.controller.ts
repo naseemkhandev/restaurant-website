@@ -37,10 +37,10 @@ export const register = async (
       verificationTokenExpires: new Date(Date.now() + 24 * 60 * 60 * 1000),
     });
 
+    generateJwtToken({ _id: newUser._id, isAdmin: newUser.isAdmin }, res);
+    await sendVerificationEmail(email, verificationToken, res, next);
     const userObject = newUser.toObject();
     const { password: userPassword, ...userInfo } = userObject;
-    generateJwtToken({ _id: newUser._id, isAdmin: newUser.isAdmin }, res);
-    await sendVerificationEmail(email, verificationToken as any, next);
 
     return res.status(201).json({
       message: "You have registered successfully",
@@ -110,17 +110,16 @@ export const verifyEmail = async (
       verificationTokenExpiresAt: { $gt: new Date() },
     }).select("-password");
 
-    if (!user) return next(throwError(400, "Invalid or expired token"));
+    if (!user) {
+      return next(throwError(400, "Invalid or expired token"));
+    }
+
     user.isVerified = true;
     user.verificationToken = undefined;
-    user.verificationTokenExpiresAt = undefined;
+
     await user.save();
 
-    await sendWelcomeEmail(user.email, user.fullname, next);
-
-    return res.status(200).json({
-      message: "Email verified successfully",
-    });
+    res.status(200).json({ message: "Email verified successfully" });
   } catch (error) {
     next(error);
   }
