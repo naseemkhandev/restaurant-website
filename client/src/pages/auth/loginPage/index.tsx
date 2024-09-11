@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { useUserStore } from "@/store/useUserStore";
 import { LoginInputState, loginSchema } from "@/validations/authSchema";
 import { Loader2, LockKeyhole, Mail } from "lucide-react";
 import { useState } from "react";
@@ -12,14 +13,13 @@ const LoginPage = () => {
     email: "",
     password: "",
   });
-
-  const loading = false;
+  const { login, loading } = useUserStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const result = loginSchema.safeParse(input);
@@ -29,7 +29,7 @@ const LoginPage = () => {
       return;
     }
 
-    console.log(input);
+    await login(input);
   };
 
   return (
