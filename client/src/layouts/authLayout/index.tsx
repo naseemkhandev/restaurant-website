@@ -1,7 +1,10 @@
-import { Outlet } from "react-router-dom";
+import { useUserStore } from "@/store/useUserStore";
+import { Navigate, Outlet } from "react-router-dom";
 
 const AuthLayout = () => {
-  return <Outlet />;
+  const { user } = useUserStore();
+
+  return !user ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default AuthLayout;

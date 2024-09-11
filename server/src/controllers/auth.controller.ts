@@ -44,7 +44,7 @@ export const register = async (
 
     return res.status(201).json({
       message: "You have registered successfully",
-      userInfo,
+      user: userInfo,
     });
   } catch (error) {
     next(error);
@@ -75,7 +75,7 @@ export const login = async (
 
     return res.status(200).json({
       message: `Welcome back, ${userInfo.fullname}`,
-      userInfo,
+      user: userInfo,
     });
   } catch (error) {
     next(error);

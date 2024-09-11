@@ -19,6 +19,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useUserStore } from "@/store/useUserStore";
 import {
   HandPlatter,
   Loader2,
@@ -36,11 +37,15 @@ const user = {
   profilePicture: "https://randomuser.me/api/port",
   fullname: "Naseem Khan",
 };
-const loading = false;
 const logout = () => {};
 const cart = [];
+const loading = false;
 
 const Navbar = () => {
+  const { user } = useUserStore();
+
+  console.log(user);
+
   return (
     <div className="container px-5 md:px-10 mx-auto w-full">
       <div className="flex items-center justify-between h-14">

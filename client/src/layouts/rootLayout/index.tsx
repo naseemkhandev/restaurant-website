@@ -1,9 +1,12 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Navbar from "./navbar";
 import Footer from "./footer";
+import { useUserStore } from "@/store/useUserStore";
 
 const RootLayout = () => {
-  return (
+  const { user } = useUserStore();
+
+  return user ? (
     <div className="flex flex-col min-h-dvh">
       <div className="bg-white dark:bg-black py-1">
         <Navbar />
@@ -15,6 +18,8 @@ const RootLayout = () => {
 
       <Footer />
     </div>
+  ) : (
+    <Navigate to="/auth/login" />
   );
 };
 
