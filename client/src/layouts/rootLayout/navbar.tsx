@@ -32,17 +32,10 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const user = {
-  admin: true,
-  profilePicture: "https://randomuser.me/api/port",
-  fullname: "Naseem Khan",
-};
-const logout = () => {};
 const cart = [];
-const loading = false;
 
 const Navbar = () => {
-  const { user } = useUserStore();
+  const { user, logout, loading } = useUserStore();
 
   console.log(user);
 
@@ -95,10 +88,12 @@ const Navbar = () => {
               </Button>
             </Link>
             <div>
-              <Avatar>
-                <AvatarImage src={user?.profilePicture} alt="profilephoto" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
+              <Link to="/profile" className="flex items-center gap-2">
+                <Avatar>
+                  <AvatarImage src={user?.profilePicture} alt="profilephoto" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </Link>
             </div>
             <div>
               {loading ? (
@@ -123,6 +118,8 @@ const Navbar = () => {
 export default Navbar;
 
 const MobileNavbar = () => {
+  const { user, logout, loading } = useUserStore();
+
   return (
     <Sheet>
       <SheetTrigger asChild>

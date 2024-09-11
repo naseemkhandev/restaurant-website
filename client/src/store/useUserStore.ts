@@ -11,6 +11,7 @@ interface UserState {
   loading: boolean;
   register: (data: RegisterInputState) => Promise<void>;
   login: (data: LoginInputState) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export const useUserStore = create<UserState>()(
@@ -53,6 +54,27 @@ export const useUserStore = create<UserState>()(
             set({
               user: response?.data?.user,
               isAuthenticated: true,
+            });
+          }
+        } catch (error: any) {
+          toast.error(error?.response?.data?.message);
+        } finally {
+          toast.dismiss(loading);
+          set({ loading: false });
+        }
+      },
+
+      logout: async () => {
+        const loading = toast.loading("Logging out...");
+        set({ loading: true });
+        try {
+          const response = await apiClient.post("/auth/logout");
+
+          if (response?.status === 200) {
+            toast.success(response?.data?.message);
+            set({
+              user: null,
+              isAuthenticated: false,
             });
           }
         } catch (error: any) {
