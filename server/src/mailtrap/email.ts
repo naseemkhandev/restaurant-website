@@ -17,7 +17,7 @@ export const sendVerificationEmail = async (
   const recipient = [{ email }];
   try {
     await client.send({
-      from: sender,
+      from: sender as any,
       to: recipient,
       subject: "Verify your email",
       html: htmlContent.replace("{verificationToken}", verificationToken),
@@ -37,10 +37,11 @@ export const sendWelcomeEmail = async (
   name: string,
   next: NextFunction
 ) => {
+  const recipient = [{ email }];
   try {
     await client.send({
       from: sender as any,
-      to: email as any,
+      to: recipient,
       subject: "Welcome to Our Service",
       html: generateWelcomeEmailHtml(name),
       category: "Welcome Email",

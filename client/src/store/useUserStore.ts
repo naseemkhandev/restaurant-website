@@ -24,6 +24,7 @@ type UserState = {
   register: (input: RegisterInputState) => Promise<void>;
   login: (input: LoginInputState) => Promise<void>;
   logout: () => Promise<void>;
+  verifyEmail: (token: string) => Promise<void>;
 };
 
 export const useUserStore = create<UserState>()(
@@ -88,6 +89,23 @@ export const useUserStore = create<UserState>()(
               user: null,
               isAuthenticated: false,
             });
+          }
+        } catch (error: any) {
+          toast.error(error?.response?.data?.message);
+        } finally {
+          toast.dismiss(loading);
+          set({ loading: false });
+        }
+      },
+
+      verifyEmail: async (token: string) => {
+        const loading = toast.loading("Verifying email...");
+        set({ loading: true });
+        try {
+          const response = await apiClient.get(`/auth/verify-email?token=${token}`);
+      
+          if (response?.status === 200) {
+            toast.success(response?.data?.message);
           }
         } catch (error: any) {
           toast.error(error?.response?.data?.message);
