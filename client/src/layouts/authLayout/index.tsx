@@ -4,7 +4,15 @@ import { Navigate, Outlet } from "react-router-dom";
 const AuthLayout = () => {
   const { user } = useUserStore();
 
-  return !user ? <Outlet /> : <Navigate to="/" />;
+  console.log(user);
+
+  return !user ? (
+    <Outlet />
+  ) : !user?.isVerified ? (
+    <Navigate to="/auth/verify-email" />
+  ) : (
+    <Navigate to="/" />
+  );
 };
 
 export default AuthLayout;

@@ -6,7 +6,7 @@ import { useUserStore } from "@/store/useUserStore";
 const RootLayout = () => {
   const { user } = useUserStore();
 
-  return user ? (
+  return user && user?.isVerified ? (
     <div className="flex flex-col min-h-dvh">
       <div className="bg-white dark:bg-black py-1">
         <Navbar />
