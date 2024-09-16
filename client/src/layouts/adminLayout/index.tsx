@@ -1,15 +1,17 @@
 import { Navigate, Outlet } from "react-router-dom";
-import Navbar from "./navbar";
-import Footer from "./footer";
 import { useUserStore } from "@/store/useUserStore";
+import Navbar from "../rootLayout/navbar";
+import Footer from "../rootLayout/footer";
 
-const RootLayout = () => {
+const AdminLayout = () => {
   const { user, isAuthenticated } = useUserStore();
 
   return !isAuthenticated ? (
     <Navigate to="/auth/login" replace />
   ) : !user?.isVerified ? (
     <Navigate to="/auth/verify-email" replace />
+  ) : !user?.isAdmin ? (
+    <Navigate to="/" replace />
   ) : (
     <div className="flex flex-col min-h-dvh">
       <div className="bg-white dark:bg-black py-1">
@@ -25,4 +27,4 @@ const RootLayout = () => {
   );
 };
 
-export default RootLayout;
+export default AdminLayout;

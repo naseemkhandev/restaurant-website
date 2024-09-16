@@ -37,8 +37,6 @@ const cart = [];
 const Navbar = () => {
   const { user, logout, loading } = useUserStore();
 
-  console.log(user);
-
   return (
     <div className="container px-5 md:px-10 mx-auto w-full">
       <div className="flex items-center justify-between h-14">
@@ -55,7 +53,7 @@ const Navbar = () => {
             <Link to="/profile">Profile</Link>
             <Link to="/orders">Order</Link>
 
-            {user?.admin && (
+            {user?.isAdmin && (
               <Menubar>
                 <MenubarMenu>
                   <MenubarTrigger>Dashboard</MenubarTrigger>
@@ -167,7 +165,7 @@ const MobileNavbar = () => {
             <ShoppingCart />
             <span>Cart (0)</span>
           </Link>
-          {user?.admin && (
+          {user?.isAdmin && (
             <>
               <Link
                 to="/admin/menu"

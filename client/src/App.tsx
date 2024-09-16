@@ -18,6 +18,16 @@ import SearchPage from "./pages/searchPage";
 import OrdersPage from "./pages/ordersPage";
 import NotFoundPage from "./pages/notFountPage";
 import SuccessPage from "./pages/successPage";
+import AdminLayout from "./layouts/adminLayout";
+import { useUserStore } from "./store/useUserStore";
+import {
+  Loader,
+  Loader2,
+  Loader2Icon,
+  LoaderCircle,
+  LoaderCircleIcon,
+  LoaderIcon,
+} from "lucide-react";
 
 const appRouter = createBrowserRouter([
   {
@@ -54,7 +64,7 @@ const appRouter = createBrowserRouter([
 
   {
     path: "/admin",
-    element: <RootLayout />,
+    element: <AdminLayout />,
     children: [
       {
         path: "restaurant",
@@ -109,6 +119,16 @@ const appRouter = createBrowserRouter([
 ]);
 
 function App() {
+  const { loading } = useUserStore();
+
+  if (loading) {
+    return (
+      <div className="bg-black/10 w-full h-dvh flex items-center justify-center pointer-events-none backdrop-blur-md">
+        <Loader className="animate-spin size-6" />
+      </div>
+    );
+  }
+
   return (
     <main>
       <RouterProvider router={appRouter}></RouterProvider>
