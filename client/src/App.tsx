@@ -3,6 +3,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthLayout from "@/layouts/authLayout";
 import LoginPage from "@/pages/auth/loginPage";
 import RegisterPage from "@/pages/auth/registerPage";
+import { Loader } from "lucide-react";
+import AdminLayout from "./layouts/adminLayout";
 import RootLayout from "./layouts/rootLayout";
 import MenuPage from "./pages/admin/menuPage";
 import AdminOrdersPage from "./pages/admin/ordersPage";
@@ -12,22 +14,13 @@ import ResetPasswordPage from "./pages/auth/resetPasswordPage";
 import VerifyEmailPage from "./pages/auth/verifyEmailPage";
 import CartPage from "./pages/cartPage";
 import HomePage from "./pages/homePage";
+import NotFoundPage from "./pages/notFountPage";
+import OrdersPage from "./pages/ordersPage";
 import ProfilePage from "./pages/profilePage";
 import RestaurantDetailsPage from "./pages/restaurantDetailsPage";
 import SearchPage from "./pages/searchPage";
-import OrdersPage from "./pages/ordersPage";
-import NotFoundPage from "./pages/notFountPage";
 import SuccessPage from "./pages/successPage";
-import AdminLayout from "./layouts/adminLayout";
 import { useUserStore } from "./store/useUserStore";
-import {
-  Loader,
-  Loader2,
-  Loader2Icon,
-  LoaderCircle,
-  LoaderCircleIcon,
-  LoaderIcon,
-} from "lucide-react";
 
 const appRouter = createBrowserRouter([
   {
