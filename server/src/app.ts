@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
-app.use("/api/v1/restaurnats", restaurantRoutes);
+app.use("/api/v1/restaurants", restaurantRoutes);
 app.use("/api/v1/orders", orderRoutes);
 app.use("/api/v1/menus", menuRoutes);
 
