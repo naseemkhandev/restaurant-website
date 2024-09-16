@@ -26,6 +26,9 @@ type UserState = {
   logout: () => Promise<void>;
   verifyEmail: (token: string) => Promise<void>;
   checkAuthUser: () => Promise<void>;
+  forgotPassword: (email: string) => Promise<void>;
+  resetPassword: (password: string, token: string) => Promise<void>;
+  updateProfile: (data: Partial<User>) => Promise<void>;
 };
 
 export const useUserStore = create<UserState>()(
@@ -137,7 +140,64 @@ export const useUserStore = create<UserState>()(
         } catch (error: any) {
           toast.error(error?.response?.data?.message);
         } finally {
-          set({ isCheckingAuth: false }); 
+          set({ isCheckingAuth: false });
+        }
+      },
+
+      forgotPassword: async (email: string) => {
+        const loading = toast.loading("Sending email...");
+        set({ loading: true });
+        try {
+          const response = await apiClient.post("/auth/forgot-password", {
+            email,
+          });
+
+          if (response?.status === 200) {
+            toast.success(response?.data?.message);
+          }
+        } catch (error: any) {
+          toast.error(error?.response?.data?.message);
+        } finally {
+          toast.dismiss(loading);
+          set({ loading: false });
+        }
+      },
+
+      resetPassword: async (password: string, token: string) => {
+        const loading = toast.loading("Resetting password...");
+        set({ loading: true });
+        try {
+          const response = await apiClient.post("/auth/reset-password", {
+            password,
+            token,
+          });
+
+          if (response?.status === 200) {
+            toast.success(response?.data?.message);
+          }
+        } catch (error: any) {
+          toast.error(error?.response?.data?.message);
+        } finally {
+          toast.dismiss(loading);
+          set({ loading: false });
+        }
+      },
+
+      updateProfile: async (data: Partial<User>) => {
+        const loading = toast.loading("Updating profile...");
+        set({ loading: true });
+        try {
+          const response = await apiClient.put("/users/update-profile", data);
+
+          if (response?.status === 200) {
+            toast.success(response?.data?.message);
+            set({ user: response?.data?.user, isAuthenticated: true });
+          }
+        } catch (error: any) {
+          toast.error(error?.response?.data?.message);
+        } finally {
+          toast.dismiss(loading);
+          set({ loading: false, user: null, isAuthenticated: false });
         }
       },
     }),

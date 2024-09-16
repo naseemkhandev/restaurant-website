@@ -4,9 +4,13 @@ import Footer from "./footer";
 import { useUserStore } from "@/store/useUserStore";
 
 const RootLayout = () => {
-  const { user } = useUserStore();
+  const { user, isAuthenticated } = useUserStore();
 
-  return user && user?.isVerified ? (
+  return !user?.isVerified ? (
+    <Navigate to="/auth/verify-email" replace />
+  ) : !isAuthenticated ? (
+    <Navigate to="/auth/login" replace />
+  ) : (
     <div className="flex flex-col min-h-dvh">
       <div className="bg-white dark:bg-black py-1">
         <Navbar />
@@ -18,8 +22,6 @@ const RootLayout = () => {
 
       <Footer />
     </div>
-  ) : (
-    <Navigate to="/auth/login" />
   );
 };
 
